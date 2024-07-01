@@ -1,0 +1,17 @@
+.list{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+        flex-wrap: wrap;
+        gap: 50px;
+}
+
+.item{
+    display: flex;
+   
+}
+
+.img img{
+    width: 400px;
+    height: 480px;
+}
