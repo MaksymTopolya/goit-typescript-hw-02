@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import { searchCollections } from "./galeryApi";
@@ -8,10 +7,6 @@ import Loader from "./components/Loader/Loader";
 import ImageModal from "./components/ImageModal/ImageModal";
 import { photosType, selectedImageType } from "./types";
 
-
-
- 
-
 function App() {
   const [inputValue, setInputValue] = useState<string>("");
   const [photos, setPhotos] = useState<photosType[]>([]);
@@ -20,20 +15,22 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<selectedImageType>({img: undefined, alt: undefined});
+  const [selectedImage, setSelectedImage] = useState<selectedImageType>({
+    img: undefined,
+    alt: undefined,
+  });
 
-
-  const handleFormSubmit = (value: string) : void => {
+  const handleFormSubmit = (value: string): void => {
     setInputValue(value);
-    setPage(1); 
-    setPhotos([]); 
+    setPage(1);
+    setPhotos([]);
   };
 
   useEffect(() => {
     if (inputValue) {
-      setShowBtnMore(false)
+      setShowBtnMore(false);
       setIsLoading(true);
-      searchCollections({query: inputValue, page })
+      searchCollections({ query: inputValue, page })
         .then((data) => {
           setIsError(false);
           setPhotos((prevPhotos) => [...prevPhotos, ...data.results]);
@@ -48,18 +45,18 @@ function App() {
     }
   }, [inputValue, page]);
 
-  const increasePage = () : void => {
+  const increasePage = (): void => {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const handleClickImg = ({img, alt}: selectedImageType) : void => {
+  const handleClickImg = ({ img, alt }: selectedImageType): void => {
     setSelectedImage({ img, alt });
     setIsOpen(true);
   };
 
   const handleOpenModal = (value: boolean) => {
-    setIsOpen(value)
-  }
+    setIsOpen(value);
+  };
 
   return (
     <div>
@@ -68,7 +65,11 @@ function App() {
       {isLoading && <Loader />}
       {isError && <p>Oops! There was an error! Try again</p>}
       {showBtnMore && <LoadMoreBtn increasePage={increasePage} />}
-      <ImageModal isOpen={modalIsOpen} onOpen={handleOpenModal} image={selectedImage} />
+      <ImageModal
+        isOpen={modalIsOpen}
+        onOpen={handleOpenModal}
+        image={selectedImage}
+      />
     </div>
   );
 }
